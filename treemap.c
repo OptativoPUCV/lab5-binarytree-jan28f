@@ -36,10 +36,17 @@ TreeNode * createTreeNode(void* key, void * value) {
     return new;
 }
 
-TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
+TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2))
+{
+    TreeMap *nuevoArbol = (TreeMap *)malloc(sizeof(TreeMap));
+    if (nuevoArbol == NULL) return NULL;
+
+    nuevoArbol->root = NULL;
+    nuevoArbol->current = NULL;
+    nuevoArbol->lower_than = lower_than;
 
     //new->lower_than = lower_than;
-    return NULL;
+    return nuevoArbol;
 }
 
 
@@ -53,8 +60,9 @@ TreeNode * minimum(TreeNode * x){
 }
 
 
-void removeNode(TreeMap * tree, TreeNode* node) {
-
+void removeNode(TreeMap * tree, TreeNode* node)
+{
+    if ()
 }
 
 void eraseTreeMap(TreeMap * tree, void* key){

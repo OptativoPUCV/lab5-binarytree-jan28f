@@ -45,7 +45,6 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2))
     nuevoArbol->current = NULL;
     nuevoArbol->lower_than = lower_than;
 
-    //new->lower_than = lower_than;
     return nuevoArbol;
 }
 
@@ -62,6 +61,7 @@ TreeNode * minimum(TreeNode * x){
 
 void removeNode(TreeMap * tree, TreeNode* node)
 {
+    if (tree == NULL) return;
 }
 
 void eraseTreeMap(TreeMap * tree, void* key){

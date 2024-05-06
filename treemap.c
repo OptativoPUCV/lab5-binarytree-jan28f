@@ -77,6 +77,7 @@ void removeNode(TreeMap *tree, TreeNode *node)
             TreeNode *menor = minimum(node->right);
             node->pair->key = menor->pair->key;
             node->pair->value = menor->pair->value;
+            removeNode(tree, menor);
         }
         else
         {
@@ -88,7 +89,6 @@ void removeNode(TreeMap *tree, TreeNode *node)
             
             if (node->parent->left == node) node->parent->left = hijo;
             else node->parent->right = hijo;
-            
         }
     }
 }

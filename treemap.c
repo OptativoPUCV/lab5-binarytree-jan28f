@@ -81,6 +81,15 @@ void removeNode(TreeMap *tree, TreeNode *node)
         }
         else
         {
+            // Si tiene un hijo
+            TreeNode *hijo = NULL;
+            if (node->left != NULL) hijo = node->left;
+            else hijo = node->right;
+            hijo->parent = node->parent;
+            
+            if (node->parent->left == node) node->parent->left = hijo;
+            else node->parent->right = hijo;
+            
         }
     }
 }

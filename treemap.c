@@ -158,7 +158,7 @@ Pair *searchTreeMap(TreeMap * tree, void* key)
     if (tree == NULL || tree->root == NULL) return NULL;
 
     TreeNode *aux = tree->root;
-    while (aux != NULL)
+    while (aux != NULL) // Se comienza a recorrer el arbol
     {
         // Verifica si es la clave buscada
         if (is_equal(tree, key, aux->pair->key) == 1)
@@ -188,6 +188,7 @@ Pair *firstTreeMap(TreeMap * tree)
 {
     if (tree == NULL || tree->root == NULL) return NULL;
 
+    // Consigue al minimo, y actualiza el current
     TreeNode *aux = minimum(tree->root);
     tree->current = aux;
     
@@ -198,10 +199,7 @@ Pair *nextTreeMap(TreeMap * tree)
 {
     if (tree == NULL || tree->root == NULL) return NULL;
 
-
-    // Consigo el current
     TreeNode *aux = tree->current;
-    // Verifico el lado derecho, ya que sera si o si mayor
     if (aux->right != NULL)
     {
         // Consigo el elemento menor del subarbol derecho
@@ -211,7 +209,11 @@ Pair *nextTreeMap(TreeMap * tree)
     }
     else
     {
-        return NULL;
+        while (aux->parent != NULL && aux->parent->right == aux)
+        {
+            aux = aux->parent;
+            tree->current = aux;
+        }
     }
     
     return NULL;

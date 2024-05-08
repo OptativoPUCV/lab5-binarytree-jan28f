@@ -196,9 +196,13 @@ Pair *nextTreeMap(TreeMap * tree)
 {
     if (tree == NULL || tree->root == NULL) return NULL;
 
+
+    // Consigo el current
     TreeNode *aux = tree->current;
+    // Verifico el lado derecho, ya que sera si o si mayor
     if (aux->right != NULL)
     {
+        // Consigo el elemento menor del subarbol derecho
         aux = minimum(aux->right);
         tree->current = aux;
         return aux->pair;
@@ -207,11 +211,12 @@ Pair *nextTreeMap(TreeMap * tree)
     {
         TreeNode *padre = aux->parent;
         while (padre != NULL && aux == padre->right)
-            {
-                aux = padre;
-                padre = padre->parent;
-            }
+        {
+            aux = padre;
+            padre = padre->parent;
+        }
         tree->current = padre;
+        
         if (padre != NULL) return padre->pair;
         else return NULL;
     }

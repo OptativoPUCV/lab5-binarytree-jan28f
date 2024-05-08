@@ -49,8 +49,56 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2))
 }
 
 
-void insertTreeMap(TreeMap * tree, void* key, void * value) {
+void insertTreeMap(TreeMap * tree, void* key, void * value)
+{
+    if (tree == NULL) return;
 
+    // Si el arbol esta vacio
+    if (tree->root == NULL)
+        tree->root = createTreeNode(key, value);
+    else
+    {
+        // Se ubica al inicio del arbol
+        TreeNode *aux = tree->root;
+        while (aux != NULL)
+        {
+            // Si ya se encuentra la clave
+            if (is_equal(tree, aux->pair->key, key)) return;
+            else // En caso de no encontrarse la clave
+            {
+                if (tree->lower_than(aux->pair->key, key) == 1)
+                {
+                    // Si el nodo a insertar es menor que el actual
+                    // Si el lado izquierdo es nulo
+                    if (aux->left == NULL)
+                    {
+                        TreeNode *nuevoNodo = createTreeNode(key, value);
+                        nuevoNodo->parent = aux;
+                        aux->left = nuevoNodo;
+                        tree->current = nuevoNodo;
+                        return;
+                    }
+                    else // Si el lado izquierdo no es nulo
+                        aux = aux->left;
+                }
+                else
+                {
+                    // Si el nodo a insertar es mayor que el actual
+                    // Si el lado derecho es nulo
+                    if (aux->right == NULL)
+                    {
+                        TreeNode *nuevoNodo = createTreeNode(key, value);
+                        nuevoNodo->parent = aux;
+                        aux->right = nuevoNodo;
+                        tree->current = nuevoNodo;
+                        return;
+                    }
+                    else // Si el lado derecho no es nulo
+                        aux = aux->right;
+                }
+            }
+        }
+    }
 }
 
 TreeNode * minimum(TreeNode * x){
@@ -74,10 +122,7 @@ void removeNode(TreeMap *tree, TreeNode *node)
         // Si tiene 2 hijos
         if (node->left != NULL && node->right != NULL)
         {
-            TreeNode *menor = minimum(node->right);
-            node->pair->key = menor->pair->key;
-            node->pair->value = menor->pair->value;
-            removeNode(tree, menor);
+            TreeNode *min = minimum(node->right);
         }
         else
         {
@@ -130,14 +175,14 @@ Pair * searchTreeMap(TreeMap * tree, void* key)
 }
 
 
-Pair * upperBound(TreeMap * tree, void* key) {
+Pair *upperBound(TreeMap * tree, void* key) {
     return NULL;
 }
 
-Pair * firstTreeMap(TreeMap * tree) {
+Pair *firstTreeMap(TreeMap * tree) {
     return NULL;
 }
 
-Pair * nextTreeMap(TreeMap * tree) {
+Pair *nextTreeMap(TreeMap * tree) {
     return NULL;
 }

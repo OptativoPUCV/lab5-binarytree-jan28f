@@ -122,7 +122,7 @@ void removeNode(TreeMap *tree, TreeNode *node)
         // Si tiene 2 hijos
         if (node->left != NULL && node->right != NULL)
         {
-            TreeNode *min = minimum(node->right);
+            return;
         }
         else
         {

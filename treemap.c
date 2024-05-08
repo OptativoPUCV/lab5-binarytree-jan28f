@@ -53,17 +53,31 @@ void insertTreeMap(TreeMap * tree, void* key, void * value)
 {
     if (tree == NULL) return;
 
+    TreeNode *nuevoNodo = createTreeNode(key, value);
+    
     // Si el arbol esta vacio
     if (tree->root == NULL)
-        tree->root = createTreeNode(key, value);
+        tree->root = nuevoNodo;
     else
     {
         // Se ubica al inicio del arbol
         TreeNode *aux = tree->root;
+        TreeNode *padre = NULL;
         while (aux != NULL)
         {
             // Si ya se encuentra la clave
             if (is_equal(tree, aux->pair->key, key)) return;
+            else 
+            {
+                padre = aux;
+                if ((tree->lower_than(aux->pair->key, key) == 1))
+                    aux = aux->left;
+                else
+                    aux = aux->right;
+            }    
+                
+
+            /*
             else // En caso de no encontrarse la clave
             {
                 if (tree->lower_than(aux->pair->key, key) == 1)
@@ -96,8 +110,19 @@ void insertTreeMap(TreeMap * tree, void* key, void * value)
                     else // Si el lado derecho no es nulo
                         aux = aux->right;
                 }
-            }
+            } */
         }
+        if (tree->lower_than(padre->pair->key, key) == 1)
+        {
+            nuevoNodo->parent = padre;
+            padre->left = nuevoNodo;
+        }
+        else
+        {
+            nuevoNodo->parent = padre;
+            padre->right = nuevoNodo;
+        }
+        tree->current = nuevoNodo;
     }
 }
 
@@ -147,11 +172,7 @@ void eraseTreeMap(TreeMap * tree, void* key){
     if (searchTreeMap(tree, key) == NULL) return;
     TreeNode* node = tree->current;
     removeNode(tree, node);
-
 }
-
-
-
 
 Pair *searchTreeMap(TreeMap * tree, void* key)
 {

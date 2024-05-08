@@ -202,19 +202,16 @@ Pair *nextTreeMap(TreeMap * tree)
     TreeNode *aux = tree->current;
     if (aux->right != NULL)
     {
-        // Consigo el elemento menor del subarbol derecho
         aux = minimum(aux->right);
         tree->current = aux;
         return aux->pair;
     }
     else
     {
-        while (aux->parent != NULL && aux->parent->right == aux)
-        {
+        while (aux->parent != NULL && aux == aux->parent->right)
             aux = aux->parent;
-            tree->current = aux;
-        }
-        return aux->pair;
+        tree->current = aux->parent;
+        return aux->parent->pair;
     }
     
     return NULL;

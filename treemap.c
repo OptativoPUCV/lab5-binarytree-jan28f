@@ -160,21 +160,23 @@ Pair * searchTreeMap(TreeMap * tree, void* key)
     TreeNode *aux = tree->root;
     while (aux != NULL)
     {
+        // Verifica si es la clave buscada
         if (is_equal(tree, key, aux->pair->key) == 1)
-        {
+        { // Si lo es
             tree->current = aux;
             return aux->pair;
         }
         else
         {
+            // Si es menor, se mueve a la izquierda
             if (tree->lower_than(key, aux->pair->key) == 1)
                 aux = aux->left;
-            else
+            else // Si es mayor, se mueve a la derecha
                 aux = aux->right;
         }
     }
     
-    return NULL;
+    return aux->pair;
 }
 
 

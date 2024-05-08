@@ -208,12 +208,14 @@ Pair *nextTreeMap(TreeMap * tree)
     }
     else
     {
-        TreeNode* temp = aux;
-        TreeNode* parent = temp->parent;
-        while (parent != NULL && temp == parent->right) {
-            temp = parent;
-            parent = parent->parent;
-        }
+        TreeNode *padre = aux->parent;
+        while (padre != NULL && aux == padre->right)
+            {
+                aux = padre;
+                padre = padre->parent;
+            }
+        tree->current = padre;
+        if (padre != NULL) return padre->pair;
     }
     
     return NULL;

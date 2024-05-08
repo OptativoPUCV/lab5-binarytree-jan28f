@@ -211,7 +211,7 @@ Pair *nextTreeMap(TreeMap * tree)
         while (aux->parent != NULL && aux == aux->parent->right)
             aux = aux->parent;
         tree->current = aux->parent;
-        return aux->parent->pair;
+        return tree->current->pair;
     }
     
     return NULL;

@@ -68,17 +68,19 @@ void insertTreeMap(TreeMap *tree, void *key, void *value)
             padreActual = actual;
             if (is_equal(tree, actual->pair->key, key) == 1)
             {
+                // Clave encontrada, actualiza el valor
                 actual->pair->value = value;
-                free(nuevoNodo);
+                free(nuevoNodo); // Liberar el nodo no utilizado
                 return;
+            }
+            else if (tree->lower_than(key, actual->pair->key))
+            {
+                actual = actual->left;
             }
             else
             {
-                if (tree->lower_than(actual->pair->key, key) == 1)
-                    actual = actual->left;
-                else
-                    actual = actual->right;
-            } 
+                actual = actual->right;
+            }
         }
 
         nuevoNodo->parent = padreActual;
@@ -88,6 +90,7 @@ void insertTreeMap(TreeMap *tree, void *key, void *value)
             padreActual->right = nuevoNodo;
     }
 }
+
 
 TreeNode * minimum(TreeNode *x)
 {

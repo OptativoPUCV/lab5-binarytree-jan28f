@@ -49,80 +49,50 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2))
 }
 
 
-void insertTreeMap(TreeMap * tree, void* key, void * value)
+void insertTreeMap(TreeMap *tree, void *key, void *value)
 {
     if (tree == NULL) return;
 
     TreeNode *nuevoNodo = createTreeNode(key, value);
-    
-    // Si el arbol esta vacio
     if (tree->root == NULL)
+    {
         tree->root = nuevoNodo;
+        tree->current = nuevoNodo;
+    }
     else
     {
-        // Se ubica al inicio del arbol
-        TreeNode *aux = tree->root;
-        TreeNode *padre = NULL;
-        while (aux != NULL)
+        TreeNode *actual = tree->current;
+        TreeNode *padreActual = actual->parent;
+        while (actual != NULL)
         {
-            // Si ya se encuentra la clave
-            if (is_equal(tree, aux->pair->key, key)) return;
-            else 
+            if (is_equal(tree, actual->pair->key, key) == 1)
             {
-                padre = aux;
-                if ((tree->lower_than(aux->pair->key, key) == 1))
-                    aux = aux->left;
+                nuevoNodo->parent = padreActual;
+                nuevoNodo->left = actual->left;
+                nuevoNodo->right = actual->right;
+                actual = nuevoNodo;
+                return;
+            }
+            else
+            {
+                if (tree->lower_than(actual->pair->key, key))
+                {
+                    padreActual = actual;
+                    actual = actual->left;
+                }
                 else
-                    aux = aux->right;
-            }    
-                
+                {
+                    padreActual = actual;
+                    actual = actual->right;
+                }
+            } 
+        }
 
-            /*
-            else // En caso de no encontrarse la clave
-            {
-                if (tree->lower_than(aux->pair->key, key) == 1)
-                {
-                    // Si el nodo a insertar es menor que el actual
-                    // Si el lado izquierdo es nulo
-                    if (aux->left == NULL)
-                    {
-                        TreeNode *nuevoNodo = createTreeNode(key, value);
-                        nuevoNodo->parent = aux;
-                        aux->left = nuevoNodo;
-                        tree->current = nuevoNodo;
-                        return;
-                    }
-                    else // Si el lado izquierdo no es nulo
-                        aux = aux->left;
-                }
-                else
-                {
-                    // Si el nodo a insertar es mayor que el actual
-                    // Si el lado derecho es nulo
-                    if (aux->right == NULL)
-                    {
-                        TreeNode *nuevoNodo = createTreeNode(key, value);
-                        nuevoNodo->parent = aux;
-                        aux->right = nuevoNodo;
-                        tree->current = nuevoNodo;
-                        return;
-                    }
-                    else // Si el lado derecho no es nulo
-                        aux = aux->right;
-                }
-            } */
-        }
-        if (tree->lower_than(padre->pair->key, key) == 1)
-        {
-            nuevoNodo->parent = padre;
-            padre->left = nuevoNodo;
-        }
+        nuevoNodo->parent = padreActual;
+        if (tree->lower_than(actual->pair->key, key))
+            padreActual->left = nuevoNodo;
         else
-        {
-            nuevoNodo->parent = padre;
-            padre->right = nuevoNodo;
-        }
-        tree->current = nuevoNodo;
+            padreActual->right = nuevoNodo;
     }
 }
 

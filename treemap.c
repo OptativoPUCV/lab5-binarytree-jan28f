@@ -66,14 +66,14 @@ void insertTreeMap(TreeMap *tree, void *key, void *value)
         while (actual != NULL)
         {
             padreActual = actual;
-            if (is_equal(tree, actual->pair->key, key))
+            if (is_equal(tree, key, actual->pair->key))
             {
                 free(nuevoNodo);
                 return;
             }
             else
             {
-                if (tree->lower_than(actual->pair->key, key))
+                if (tree->lower_than(key, actual->pair->key))
                     actual = actual->left;
                 else
                     actual = actual->right;

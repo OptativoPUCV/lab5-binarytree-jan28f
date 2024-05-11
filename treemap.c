@@ -76,8 +76,8 @@ void insertTreeMap(TreeMap *tree, void *key, void *value)
                     actual = actual->left;
                 else
                     actual = actual->right;
-                padreActual = actual;
-            } 
+            }
+            padreActual = actual;
         }
 
         nuevoNodo->parent = padreActual;

@@ -68,7 +68,6 @@ void insertTreeMap(TreeMap *tree, void *key, void *value)
             padreActual = actual;
             if (is_equal(tree, actual->pair->key, key) == 1)
             {
-                actual->pair->value = value;
                 free(nuevoNodo);
                 return;
             }

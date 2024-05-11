@@ -89,7 +89,7 @@ void insertTreeMap(TreeMap *tree, void *key, void *value)
     }
 }
 
-TreeNode * minimum(TreeNode *x)
+TreeNode *minimum(TreeNode *x)
 {
     while (x->left != NULL)
         x = x->left;
@@ -113,6 +113,11 @@ void removeNode(TreeMap *tree, TreeNode *node)
         // Si tiene 2 hijos
         if (node->left != NULL && node->right != NULL)
         {
+            TreeNode *menor = minimum(node->right);
+            Pair *pair = menor->pair;
+            removeNode(tree, menor);
+            node->pair = pair;
+            
             return;
         }
         else

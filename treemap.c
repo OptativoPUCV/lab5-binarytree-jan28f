@@ -184,7 +184,7 @@ Pair *upperBound(TreeMap * tree, void* key)
         }
         else
         {
-            if (tree->lower_than(actual->pair->key, key))
+            if (!tree->lower_than(key, actual->pair->key))
                 actual = actual->right;
             else
                 return actual->pair;

@@ -169,33 +169,33 @@ Pair *searchTreeMap(TreeMap * tree, void* key)
 }
 
 
-Pair* upperBound(TreeMap* tree, void* key){
-    if (tree == NULL || tree->root == NULL) return NULL;
+Pair *upperBound(TreeMap * tree, void* key)
+{
+    if (tree == NULL) return NULL;
 
-    TreeNode *actual = tree->root;
-    TreeNode *ub_node = NULL;
-
-    while (actual != NULL) {
-        if (tree->lower_than(key, actual->pair->key)) {
-            ub_node = actual;
-            actual = actual->left;
-        } else {
-            if (!tree->lower_than(actual->pair->key, key)) {
-                // Clave igual a key, seguir buscando hacia la derecha
-                actual = actual->right;
-            } else {
-                // Clave mayor que key, actualizar ub_node y buscar hacia la izquierda
-                ub_node = actual;
+    Pair *resultado = searchTreeMap(tree, key);
+    if (resultado != NULL) return resultado;
+    else
+    {
+        TreeNode *actual = tree->root;
+        while (actual != NULL)
+        {
+            if (tree->lower_than(key, actual->pair->key))
+            {
+                resultado = actual->pair;
                 actual = actual->left;
             }
+            else
+            {
+                if (!tree->lower_than(key, actual->pair->key))
+                    actual = actual->right;
+                else
+                    return actual->pair;
+            }
         }
+
+        return resultado;
     }
-
-    // Si ub_node es NULL, no hay ninguna clave mayor o igual a key
-    if (ub_node == NULL) return NULL;
-
-    // Devolver el par asociado al nodo ub_node
-    return ub_node->pair;
 }
 
 Pair *firstTreeMap(TreeMap * tree)
